@@ -1,4 +1,4 @@
-<h1 class="text-lg mb-2">Tasks to do - {{ todoItemsCount() }}</h1>
+<h1 class="text-lg mb-2">{{title()}} - {{ todoItemsCount() }}</h1>
 <div class="flex flex-col gap-4">
   @for (item of todoItems(); track item.id) {
   <app-todo-item
