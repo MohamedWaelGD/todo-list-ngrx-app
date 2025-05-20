@@ -5,7 +5,7 @@ import { TodoItemComponent } from "./components/todo-item/todo-item.component";
 import { LoadingSpinnerComponent } from "../../shared/components/loading-spinner/loading-spinner.component";
 import { TodoItem } from '../../core/models/todo-item.model';
 import { TodoPageActions } from './store/todo/todo.actions';
-import { selectTodoItems, selectLoading, selectSelectedTodoItem } from './store/todo/todo.reducer';
+import { selectTodoItems, selectLoading, selectSelectedTodoItem, selectErrorList } from './store/todo/todo.reducer';
 import { TodoListViewComponent } from "./components/todo-list-view/todo-list-view.component";
 
 @Component({
@@ -21,6 +21,7 @@ export class TodoListComponent implements OnInit {
   private todoItems = this.store.selectSignal(selectTodoItems);
 
   protected todoItemsLoading = this.store.selectSignal(selectLoading);
+  protected todoItemsError = this.store.selectSignal(selectErrorList);
   protected todoItemsNotCompleted = computed(() => this.todoItems().filter(item => !item.isCompleted));
   protected todoItemsCompleted = computed(() => this.todoItems().filter(item => item.isCompleted));
   protected selectedTodoItem = signal<TodoItem | null>(null);

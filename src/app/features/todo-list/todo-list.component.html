@@ -13,6 +13,10 @@
       <app-loading-spinner />
     </div>
     }
+
+    @if (todoItemsError()) {
+      <p class="text-red-500 mt-5">Can't Load your tasks, Please try again.</p>
+    } @else {
     <div class="my-5">
       <app-todo-list-view
         title="Tasks to do"
@@ -32,5 +36,6 @@
         (select)="selectTodoItem($event)"
       />
     </div>
+    }
   </div>
 </main>

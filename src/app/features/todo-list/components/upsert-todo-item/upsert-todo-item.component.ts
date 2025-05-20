@@ -1,4 +1,4 @@
-import { Component, inject, Input, input, OnInit, output } from '@angular/core';
+import { Component, inject, Input, input, OnInit, output, signal } from '@angular/core';
 import {
   FormControl,
   FormGroup,
@@ -27,6 +27,7 @@ export class UpsertTodoItemComponent extends BaseComponent {
       this.formGroup.patchValue(todoItem);
     }
   }
+  protected errorMessage = signal('');
   public clearSelectedTodoItem = output();
   protected formGroup = new FormGroup({
     id: new FormControl<string | null>(null),
@@ -50,9 +51,21 @@ export class UpsertTodoItemComponent extends BaseComponent {
       .subscribe(() => {
         this.reset();
       });
+    this.actions$
+      .pipe(
+        ofType(
+          TodoApiActions.insertTodoItemFailure,
+          TodoApiActions.updateTodoItemFailure
+        ),
+        takeUntil(this.destroy$)
+      )
+      .subscribe(() => {
+        this.errorMessage.set('Something went wrong, Please try again later.');
+      });
   }
 
   reset() {
+    this.errorMessage.set('');
     this.formGroup.reset();
   }
 
@@ -62,6 +75,7 @@ export class UpsertTodoItemComponent extends BaseComponent {
   }
 
   onSubmit() {
+    this.errorMessage.set('');
     if (this.formGroup.invalid) return;
 
     if (this.formGroup.value.id) {

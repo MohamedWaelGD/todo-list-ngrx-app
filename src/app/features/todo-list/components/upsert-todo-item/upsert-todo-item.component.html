@@ -1,4 +1,6 @@
-<form [formGroup]="formGroup" (ngSubmit)="onSubmit()" class="flex gap-2">
+<form [formGroup]="formGroup" (ngSubmit)="onSubmit()">
+  <div class="flex gap-2">
+
   @if (isSelectedTodoItem) {
   <button
     type="button"
@@ -24,4 +26,8 @@
     <i class="fa-solid fa-plus text-2xl"></i>
     }
   </button>
+  </div>
+  @if (errorMessage()) {
+    <p class="text-red-500">{{errorMessage()}}</p>
+  }
 </form>

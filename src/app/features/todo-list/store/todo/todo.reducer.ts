@@ -5,14 +5,16 @@ import { TodoItem } from '../../../../core/models/todo-item.model';
 interface State {
   todoItems: TodoItem[];
   loading: boolean;
-  error: string | null;
+  errorForm: string | null;
+  errorList: string | null;
   selectedTodoItem: TodoItem | null;
 }
 
 const initialState: State = {
   todoItems: [],
   loading: false,
-  error: null,
+  errorForm: null,
+  errorList: null,
   selectedTodoItem: null,
 };
 
@@ -23,7 +25,7 @@ export const todoFeature = createFeature({
     on(TodoPageActions.loadTodoItems, (state) => ({
       ...state,
       loading: true,
-      error: null,
+      errorList: null,
     })),
     on(TodoApiActions.loadTodoItemsSuccess, (state, { todoItems }) => ({
       ...state,
@@ -33,13 +35,13 @@ export const todoFeature = createFeature({
     on(TodoApiActions.loadTodoItemsFailure, (state, { error }) => ({
       ...state,
       loading: false,
-      error,
+      errorList: error,
     })),
 
     on(TodoPageActions.insertTodoItem, (state, { title }) => ({
       ...state,
       loading: true,
-      error: null,
+      errorForm: null,
     })),
     on(TodoApiActions.insertTodoItemSuccess, (state, { todoItem }) => ({
       ...state,
@@ -49,13 +51,13 @@ export const todoFeature = createFeature({
     on(TodoApiActions.insertTodoItemFailure, (state, { error }) => ({
       ...state,
       loading: false,
-      error,
+      errorForm: error,
     })),
 
     on(TodoPageActions.updateTodoItem, (state, { id, title }) => ({
       ...state,
       loading: true,
-      error: null,
+      errorForm: null,
     })),
     on(TodoApiActions.updateTodoItemSuccess, (state, { todoItem }) => ({
       ...state,
@@ -67,13 +69,13 @@ export const todoFeature = createFeature({
     on(TodoApiActions.updateTodoItemFailure, (state, { error }) => ({
       ...state,
       loading: false,
-      error,
+      errorForm: error,
     })),
 
     on(TodoPageActions.toggleTodoItem, (state, { id, isCompleted }) => ({
       ...state,
       loading: true,
-      error: null,
+      errorList: null,
     })),
     on(TodoApiActions.toggleTodoItemSuccess, (state, { todoItem }) => ({
       ...state,
@@ -87,13 +89,13 @@ export const todoFeature = createFeature({
     on(TodoApiActions.toggleTodoItemFailure, (state, { error }) => ({
       ...state,
       loading: false,
-      error,
+      errorList: error,
     })),
 
     on(TodoPageActions.deleteTodoItem, (state, { id }) => ({
       ...state,
       loading: true,
-      error: null,
+      errorList: null,
     })),
     on(TodoApiActions.deleteTodoItemSuccess, (state, { id }) => ({
       ...state,
@@ -103,7 +105,7 @@ export const todoFeature = createFeature({
     on(TodoApiActions.deleteTodoItemFailure, (state, { error }) => ({
       ...state,
       loading: false,
-      error,
+      errorList: error,
     })),
   ),
 });
@@ -113,6 +115,7 @@ export const {
     reducer,
     selectTodoItems,
     selectLoading,
-    selectError,
+    selectErrorList,
+    selectErrorForm,
     selectSelectedTodoItem,
 } = todoFeature;
