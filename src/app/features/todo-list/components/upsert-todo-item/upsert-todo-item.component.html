@@ -1,0 +1,27 @@
+<form [formGroup]="formGroup" (ngSubmit)="onSubmit()" class="flex gap-2">
+  @if (isSelectedTodoItem) {
+  <button
+    type="button"
+    class="bg-primary p-4 rounded-lg w-[40px] h-[40px] flex items-center justify-center cursor-pointer hover:bg-primary/80 transition duration-200"
+    (click)="onClearSelectedTodoItem()"
+  >
+    <i class="fa-solid fa-arrow-left text-2xl"></i>
+  </button>
+  }
+  <input
+    formControlName="title"
+    type="text"
+    class="border border-primary focus:border-white transition duration-200 rounded-[10px] outline-hidden bg-transparent px-4 py-2 grow placeholder:text-stone-500"
+    placeholder="Add a new task"
+  />
+  <button
+    type="submit"
+    class="bg-primary p-4 rounded-lg w-[40px] h-[40px] flex items-center justify-center cursor-pointer hover:bg-primary/80 transition duration-200"
+  >
+    @if (isSelectedTodoItem) {
+    <i class="fa-solid fa-floppy-disk text-2xl"></i>
+    } @else {
+    <i class="fa-solid fa-plus text-2xl"></i>
+    }
+  </button>
+</form>
